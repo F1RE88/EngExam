@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Plus — Grade 7 Interactive Quiz (Units 2–4)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased selection:bg-indigo-500/30 selection:text-indigo-200 transition-colors duration-200">
+
+    <!-- Sticky Top Progress & Header Bar -->
+    <header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-extrabold text-lg shadow-md shadow-indigo-600/20">
+                        H+
+                    </div>
+                    <div>
+                        <h1 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight">Hello Plus — Grade 7 (Prep 1)</h1>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Unit 2 – Unit 4, Lesson 3 • 40 Total Marks</p>
+                    </div>
+                </div>
+
+                <!-- Live Stats & Theme Toggle -->
+                <div class="flex items-center gap-2.5 sm:gap-3.5">
+                    <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 border border-transparent dark:border-slate-700 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
+                        <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span id="timer-display">00:00</span>
+                    </div>
+                    <div class="text-right">
+                        <span id="progress-text" class="text-xs sm:text-sm font-bold text-indigo-600 dark:text-indigo-400">0 / 40 Answered</span>
+                    </div>
+                    <button type="button" onclick="toggleTheme()" title="Toggle Dark/Light Theme"
+                        class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-amber-300 transition cursor-pointer">
+                        <!-- Sun Icon (shown in dark mode) -->
+                        <svg id="icon-sun" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <!-- Moon Icon (shown in light mode) -->
+                        <svg id="icon-moon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full mt-3 overflow-hidden">
+                <div id="progress-bar" class="bg-indigo-600 dark:bg-indigo-500 h-full rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
+
+        <!-- Student Name & Instructions Card -->
+        <section id="intro-card" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/60">
+                        Egyptian Curriculum Extended Practice Exam
+                    </span>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white">Comprehensive 40-Mark Assessment</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Complete all 5 sections below, then click <strong class="text-slate-800 dark:text-slate-200">Submit & Grade Quiz</strong> at the bottom to receive your mark and explanations.</p>
+                </div>
+                <div class="w-full sm:w-64">
+                    <label for="student-name" class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Student Name (Optional)</label>
+                    <input type="text" id="student-name" placeholder="Enter your name..."
+                        class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Dashboard (Hidden until submitted) -->
+        <section id="results-section" class="hidden bg-white dark:bg-slate-900 rounded-2xl border-2 border-indigo-500 p-6 sm:p-8 shadow-xl space-y-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-100 dark:border-slate-800 pb-6">
+                <div class="text-center md:text-left space-y-2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                        OFFICIAL SCORE REPORT
+                    </div>
+                    <h2 id="result-student-title" class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Great Effort!</h2>
+                    <p id="result-feedback-msg" class="text-sm sm:text-base text-slate-600 dark:text-slate-400">Review your detailed corrections below to master every rule.</p>
+                </div>
+
+                <!-- Score Circle / Box -->
+                <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 sm:p-5 shrink-0">
+                    <div class="text-center">
+                        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Your Mark</div>
+                        <div class="text-3xl sm:text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">
+                            <span id="final-score">0</span><span class="text-xl text-slate-400 dark:text-slate-500 font-bold">/40</span>
+                        </div>
+                    </div>
+                    <div class="h-12 w-px bg-slate-200 dark:bg-slate-700"></div>
+                    <div class="text-center">
+                        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Grade</div>
+                        <div id="final-grade-badge" class="mt-1 px-3 py-1 rounded-lg text-sm font-extrabold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                            0%
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Breakdown Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/80 dark:border-slate-700/80 text-center">
+                    <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">Part 1: Choices</div>
+                    <div id="breakdown-part1" class="text-lg font-extrabold text-slate-800 dark:text-white mt-1">0 / 15</div>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/80 dark:border-slate-700/80 text-center">
+                    <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">Part 2: Word Form</div>
+                    <div id="breakdown-part2" class="text-lg font-extrabold text-slate-800 dark:text-white mt-1">0 / 10</div>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/80 dark:border-slate-700/80 text-center">
+                    <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">Part 3: Dialogue</div>
+                    <div id="breakdown-part3" class="text-lg font-extrabold text-slate-800 dark:text-white mt-1">0 / 5</div>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/80 dark:border-slate-700/80 text-center">
+                    <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">Part 4: Reorder</div>
+                    <div id="breakdown-part4" class="text-lg font-extrabold text-slate-800 dark:text-white mt-1">0 / 6</div>
+                </div>
+                <div class="col-span-2 sm:col-span-1 bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/80 dark:border-slate-700/80 text-center">
+                    <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">Part 5: Reading</div>
+                    <div id="breakdown-part5" class="text-lg font-extrabold text-slate-800 dark:text-white mt-1">0 / 4</div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                <p class="text-xs text-slate-500 dark:text-slate-400">Scroll down to see green (correct) and red (incorrect) feedback on every question.</p>
+                <button type="button" onclick="resetQuiz()"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition shadow-sm cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    Retake Quiz
+                </button>
+            </div>
+        </section>
+
+        <!-- QUIZ FORM CONTAINER -->
+        <form id="quiz-form" class="space-y-8" onsubmit="return false;">
+
+            <!-- PART 1: MULTIPLE CHOICE -->
+            <section class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Part 1</span>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Choose the correct answer from a, b, c, or d</h3>
+                    </div>
+                    <span class="px-3 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/60 text-xs font-bold shrink-0">15 Marks</span>
+                </div>
+
+                <div id="mcq-container" class="space-y-6">
+                    <!-- Rendered dynamically by JS -->
+                </div>
+            </section>
+
+            <!-- PART 2: CORRECT THE WORD IN BRACKETS -->
+            <section class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Part 2</span>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Complete the sentences with the correct form of the word(s) in brackets</h3>
+                    </div>
+                    <span class="px-3 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/60 text-xs font-bold shrink-0">10 Marks</span>
+                </div>
+
+                <div id="wordform-container" class="space-y-5">
+                    <!-- Rendered dynamically by JS -->
+                </div>
+            </section>
+
+            <!-- PART 3: COMPLETE THE DIALOGUE -->
+            <section class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Part 3</span>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Complete the following dialogue</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Omar and Kareem are talking about weekend plans and volunteering.</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/60 text-xs font-bold shrink-0">5 Marks</span>
+                </div>
+
+                <div id="dialogue-container" class="bg-slate-50 dark:bg-slate-800/40 rounded-2xl p-4 sm:p-6 border border-slate-200/80 dark:border-slate-800 space-y-4">
+                    <!-- Rendered dynamically by JS -->
+                </div>
+            </section>
+
+            <!-- PART 4: REARRANGE THE WORDS -->
+            <section class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Part 4</span>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Rearrange the words to make correct sentences</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Tap the words in the correct order to build each sentence.</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/60 text-xs font-bold shrink-0">6 Marks</span>
+                </div>
+
+                <div id="reorder-container" class="space-y-6">
+                    <!-- Rendered dynamically by JS -->
+                </div>
+            </section>
+
+            <!-- PART 5: READING COMPREHENSION -->
+            <section class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Part 5</span>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Read the passage and choose the correct answer</h3>
+                    </div>
+                    <span class="px-3 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/60 text-xs font-bold shrink-0">4 Marks</span>
+                </div>
+
+                <!-- Reading Passage Card -->
+                <div class="p-4 sm:p-5 rounded-xl bg-indigo-50/50 dark:bg-slate-800/80 border border-indigo-200/70 dark:border-slate-700 space-y-3 text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed">
+                    <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        <span>Reading Passage: Making Our School Greener</span>
+                    </div>
+                    <p>
+                        Last month, Grade 7 students at Al-Noor Preparatory School decided to start an environmental project to make their school greener and cleaner. In the past, students used to throw away hundreds of plastic bottles every week. While the science teacher was explaining the dangers of plastic pollution, the students suggested placing recycling bins in every corridor.
+                    </p>
+                    <p>
+                        They also planted twenty young trees around the school playground and installed solar-powered lamps near the main gate. Next week, the students are going to invite parents and neighbors to a special exhibition to show how small actions can protect our community and planet.
+                    </p>
+                </div>
+
+                <div id="reading-container" class="space-y-6">
+                    <!-- Rendered dynamically by JS -->
+                </div>
+            </section>
+
+            <!-- SUBMIT BUTTON BAR -->
+            <div id="submit-bar" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-center sm:text-left">
+                    <p class="text-sm font-bold text-slate-800 dark:text-white">Ready to check your mark?</p>
+                    <p id="submit-status-hint" class="text-xs text-slate-500 dark:text-slate-400">Make sure you answered all 40 questions before submitting.</p>
+                </div>
+                <button type="button" onclick="handleQuizSubmitClick()"
+                    class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold text-base shadow-lg shadow-indigo-600/25 transition cursor-pointer flex items-center justify-center gap-2">
+                    <span>Submit & Grade Quiz</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </form>
+    </main>
+
+    <!-- Custom Confirmation Modal (Replaces native confirm/alert) -->
+    <div id="confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/75 backdrop-blur-xs p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-5">
+            <div class="flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60 flex items-center justify-center shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Unanswered Questions</h3>
+                    <p id="modal-message" class="text-sm text-slate-600 dark:text-slate-400 mt-1">You still have unanswered questions. Are you sure you want to submit now?</p>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button type="button" onclick="closeConfirmModal()"
+                    class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition cursor-pointer">
+                    Keep Answering
+                </button>
+                <button type="button" onclick="confirmAndGradeQuiz()"
+                    class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition cursor-pointer">
+                    Submit Anyway
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. QUIZ DATA (Egyptian Grade 7 Hello Plus - 40 Marks)
+        // ==========================================
+        const TOTAL_QUESTIONS = 40;
+
+        const quizData = {
+            mcq: [
+                {
+                    id: 'mcq_1',
+                    question: 'While I _______ my homework yesterday evening, the lights suddenly went out.',
+                    options: [
+                        { key: 'a', text: 'do' },
+                        { key: 'b', text: 'did' },
+                        { key: 'c', text: 'was doing' },
+                        { key: 'd', text: 'am doing' }
+                    ],
+                    correct: 'c',
+                    explanation: 'Use Past Continuous (was/were + verb-ing) after "While" for an ongoing past action interrupted by a Past Simple event.'
+                },
+                {
+                    id: 'mcq_2',
+                    question: 'You _______ throw rubbish in the street; it pollutes the environment.',
+                    options: [
+                        { key: 'a', text: 'should' },
+                        { key: 'b', text: "mustn't" },
+                        { key: 'c', text: 'have to' },
+                        { key: 'd', text: 'can' }
+                    ],
+                    correct: 'b',
+                    explanation: '"Mustn\'t" expresses prohibition (something that is forbidden or harmful).'
+                },
+                {
+                    id: 'mcq_3',
+                    question: 'Volunteering at a local charity is a great way to help your _______.',
+                    options: [
+                        { key: 'a', text: 'community' },
+                        { key: 'b', text: 'monument' },
+                        { key: 'c', text: 'tournament' },
+                        { key: 'd', text: 'invention' }
+                    ],
+                    correct: 'a',
+                    explanation: '"Community" means the people living in the same area or neighborhood.'
+                },
+                {
+                    id: 'mcq_4',
+                    question: 'Mount Everest is _______ than Mount Kilimanjaro.',
+                    options: [
+                        { key: 'a', text: 'high' },
+                        { key: 'b', text: 'higher' },
+                        { key: 'c', text: 'highest' },
+                        { key: 'd', text: 'the highest' }
+                    ],
+                    correct: 'b',
+                    explanation: 'When comparing two things with "than", add "-er" to short adjectives (higher than).'
+                },
+                {
+                    id: 'mcq_5',
+                    question: 'She _______ to Alexandria last summer with her family.',
+                    options: [
+                        { key: 'a', text: 'travels' },
+                        { key: 'b', text: 'is traveling' },
+                        { key: 'c', text: 'traveled' },
+                        { key: 'd', text: 'was traveling' }
+                    ],
+                    correct: 'c',
+                    explanation: '"Last summer" indicates a completed action in the Past Simple tense (traveled).'
+                },
+                {
+                    id: 'mcq_6',
+                    question: 'A person who designs buildings and bridges is called an _______.',
+                    options: [
+                        { key: 'a', text: 'archaeologist' },
+                        { key: 'b', text: 'architect' },
+                        { key: 'c', text: 'astronaut' },
+                        { key: 'd', text: 'accountant' }
+                    ],
+                    correct: 'b',
+                    explanation: 'An "architect" designs buildings, houses, and structures.'
+                },
+                {
+                    id: 'mcq_7',
+                    question: 'Solar panels use energy from the _______ to generate clean electricity.',
+                    options: [
+                        { key: 'a', text: 'wind' },
+                        { key: 'b', text: 'water' },
+                        { key: 'c', text: 'sun' },
+                        { key: 'd', text: 'soil' }
+                    ],
+                    correct: 'c',
+                    explanation: '"Solar" relates to the sun. Solar panels convert sunlight into electricity.'
+                },
+                {
+                    id: 'mcq_8',
+                    question: 'Sara was walking to school when she _______ her old friend.',
+                    options: [
+                        { key: 'a', text: 'meets' },
+                        { key: 'b', text: 'met' },
+                        { key: 'c', text: 'was meeting' },
+                        { key: 'd', text: 'is meeting' }
+                    ],
+                    correct: 'b',
+                    explanation: 'After "when", we use the Past Simple (met) for the short action that interrupted the long action.'
+                },
+                {
+                    id: 'mcq_9',
+                    question: 'Before a big test, it is important to _______ your lessons carefully.',
+                    options: [
+                        { key: 'a', text: 'revise' },
+                        { key: 'b', text: 'invent' },
+                        { key: 'c', text: 'pollute' },
+                        { key: 'd', text: 'damage' }
+                    ],
+                    correct: 'a',
+                    explanation: '"Revise" means to study and review material again before an exam.'
+                },
+                {
+                    id: 'mcq_10',
+                    question: 'Look at those dark clouds in the sky! It _______ rain soon.',
+                    options: [
+                        { key: 'a', text: 'going to' },
+                        { key: 'b', text: 'is going to' },
+                        { key: 'c', text: 'was going to' },
+                        { key: 'd', text: 'are going to' }
+                    ],
+                    correct: 'b',
+                    explanation: 'Use "am/is/are + going to + infinitive" for future predictions based on present evidence (dark clouds).'
+                },
+                {
+                    id: 'mcq_11',
+                    question: 'My grandfather _______ live in a small village, but now he lives in Cairo.',
+                    options: [
+                        { key: 'a', text: 'use to' },
+                        { key: 'b', text: 'using to' },
+                        { key: 'c', text: 'used to' },
+                        { key: 'd', text: 'uses to' }
+                    ],
+                    correct: 'c',
+                    explanation: 'Use "used to + infinitive" to talk about past habits or states that are no longer true.'
+                },
+                {
+                    id: 'mcq_12',
+                    question: 'Please _______ the lights when you leave the room to save energy.',
+                    options: [
+                        { key: 'a', text: 'turn off' },
+                        { key: 'b', text: 'turn on' },
+                        { key: 'c', text: 'look for' },
+                        { key: 'd', text: 'give up' }
+                    ],
+                    correct: 'a',
+                    explanation: '"Turn off" means to switch off an electrical device or light to save electricity.'
+                },
+                {
+                    id: 'mcq_13',
+                    question: 'That is the museum _______ we saw ancient Egyptian statues.',
+                    options: [
+                        { key: 'a', text: 'who' },
+                        { key: 'b', text: 'which' },
+                        { key: 'c', text: 'when' },
+                        { key: 'd', text: 'where' }
+                    ],
+                    correct: 'd',
+                    explanation: 'Use the relative pronoun "where" to refer to places.'
+                },
+                {
+                    id: 'mcq_14',
+                    question: 'Plastic waste is very _______ to sea animals and the ocean.',
+                    options: [
+                        { key: 'a', text: 'helpful' },
+                        { key: 'b', text: 'harmful' },
+                        { key: 'c', text: 'careful' },
+                        { key: 'd', text: 'useful' }
+                    ],
+                    correct: 'b',
+                    explanation: '"Harmful" means causing damage or injury to living things or the environment.'
+                },
+                {
+                    id: 'mcq_15',
+                    question: 'We _______ wear a school uniform at our school; it is a strict rule.',
+                    options: [
+                        { key: 'a', text: "don't have to" },
+                        { key: 'b', text: "mustn't" },
+                        { key: 'c', text: 'have to' },
+                        { key: 'd', text: 'shouldn\'t' }
+                    ],
+                    correct: 'c',
+                    explanation: 'Use "have to" to express obligation or necessity required by rules.'
+                }
+            ],
+            wordForm: [
+                {
+                    id: 'wf_1',
+                    prefix: 'They',
+                    hint: '(watch)',
+                    suffix: 'a movie at 8:00 PM yesterday when their friends arrived.',
+                    accepted: ['were watching'],
+                    displayAnswer: 'were watching',
+                    explanation: '"They" takes "were" + verb-ing ("were watching") in the Past Continuous.'
+                },
+                {
+                    id: 'wf_2',
+                    prefix: 'You',
+                    hint: '(must)',
+                    suffix: 'touch electrical wires with wet hands; it is very dangerous.',
+                    accepted: ["mustn't", "must not", "mustnt"],
+                    displayAnswer: "mustn't",
+                    explanation: 'Touching wet wires is dangerous, so we use the negative modal "mustn\'t" (must not).'
+                },
+                {
+                    id: 'wf_3',
+                    prefix: 'This is the',
+                    hint: '(interesting)',
+                    suffix: 'book I have ever read!',
+                    accepted: ['most interesting'],
+                    displayAnswer: 'most interesting',
+                    explanation: 'For long adjectives (3+ syllables) in the superlative form after "the", use "most + adjective".'
+                },
+                {
+                    id: 'wf_4',
+                    prefix: 'How often',
+                    hint: '(do)',
+                    suffix: 'your brother practice football?',
+                    accepted: ['does'],
+                    displayAnswer: 'does',
+                    explanation: '"Your brother" is singular (he), so Present Simple questions use "does".'
+                },
+                {
+                    id: 'wf_5',
+                    prefix: 'We',
+                    hint: '(not / go)',
+                    suffix: 'to the museum yesterday because it was closed.',
+                    accepted: ["didn't go", "did not go", "didnt go"],
+                    displayAnswer: "didn't go",
+                    explanation: 'Negative Past Simple is formed with "didn\'t + base verb" (didn\'t go).'
+                },
+                {
+                    id: 'wf_6',
+                    prefix: 'Ali is',
+                    hint: '(tall)',
+                    suffix: 'than his younger sister.',
+                    accepted: ['taller'],
+                    displayAnswer: 'taller',
+                    explanation: 'Comparative form of the short adjective "tall" before "than" is "taller".'
+                },
+                {
+                    id: 'wf_7',
+                    prefix: 'Did you',
+                    hint: '(used)',
+                    suffix: 'to walk to primary school when you were younger?',
+                    accepted: ['use'],
+                    displayAnswer: 'use',
+                    explanation: 'In questions with "Did", use the base infinitive form "use to" (without -d).'
+                },
+                {
+                    id: 'wf_8',
+                    prefix: 'Modern cars are',
+                    hint: '(expensive)',
+                    suffix: 'than bicycles.',
+                    accepted: ['more expensive'],
+                    displayAnswer: 'more expensive',
+                    explanation: 'For long adjectives before "than", use "more + adjective" (more expensive).'
+                },
+                {
+                    id: 'wf_9',
+                    prefix: 'While Mona',
+                    hint: '(cook)',
+                    suffix: 'dinner, she accidentally burnt her hand.',
+                    accepted: ['was cooking'],
+                    displayAnswer: 'was cooking',
+                    explanation: 'Use Past Continuous ("was cooking") after "While" for an ongoing past action.'
+                },
+                {
+                    id: 'wf_10',
+                    prefix: 'Heba always',
+                    hint: '(get)',
+                    suffix: 'up early on school days.',
+                    accepted: ['gets'],
+                    displayAnswer: 'gets',
+                    explanation: 'With singular third-person subjects (Heba/she) in Present Simple, add "-s" to the verb (gets).'
+                }
+            ],
+            dialogue: [
+                {
+                    speaker: 'Omar',
+                    text: 'Hi Kareem! What are you going to do this weekend?',
+                    hasBlank: false
+                },
+                {
+                    speaker: 'Kareem',
+                    beforeBlank: 'Hi Omar! I’m going to clean up the local park with some friends.',
+                    afterBlank: '',
+                    hasBlank: true,
+                    id: 'dlg_1',
+                    blankNum: 1,
+                    options: [
+                        'Would you like to join us?',
+                        'Where did you travel last summer?',
+                        'How much does this ticket cost?'
+                    ],
+                    correct: 'Would you like to join us?',
+                    explanation: 'Kareem is inviting Omar to participate in the park cleanup activity.'
+                },
+                {
+                    speaker: 'Omar',
+                    text: 'That sounds great! Why are you doing that?',
+                    hasBlank: false
+                },
+                {
+                    speaker: 'Kareem',
+                    beforeBlank: '',
+                    afterBlank: '',
+                    hasBlank: true,
+                    id: 'dlg_2',
+                    blankNum: 2,
+                    options: [
+                        'Because we want to keep our community clean.',
+                        'Because the museum was closed yesterday.',
+                        'I was doing my homework at 8 PM.'
+                    ],
+                    correct: 'Because we want to keep our community clean.',
+                    explanation: 'Omar asked "Why...?", so Kareem answers with "Because..." explaining the goal of volunteering.'
+                },
+                {
+                    speaker: 'Omar',
+                    beforeBlank: 'I’d love to come!',
+                    afterBlank: '',
+                    hasBlank: true,
+                    id: 'dlg_3',
+                    blankNum: 3,
+                    options: [
+                        'When and where are we meeting?',
+                        'Who designed this famous bridge?',
+                        'Why should we pollute the river?'
+                    ],
+                    correct: 'When and where are we meeting?',
+                    explanation: 'Kareem replies with a place ("at the park gate") and a time ("at 9:00 AM on Friday").'
+                },
+                {
+                    speaker: 'Kareem',
+                    text: 'We are meeting at the park gate at 9:00 AM on Friday.',
+                    hasBlank: false
+                },
+                {
+                    speaker: 'Omar',
+                    beforeBlank: '',
+                    afterBlank: '',
+                    hasBlank: true,
+                    id: 'dlg_4',
+                    blankNum: 4,
+                    options: [
+                        'What should I bring with me?',
+                        'How often do you play tennis?',
+                        'Did you watch the match yesterday?'
+                    ],
+                    correct: 'What should I bring with me?',
+                    explanation: 'Kareem answers with items to bring ("a pair of gloves and a bottle of water").'
+                },
+                {
+                    speaker: 'Kareem',
+                    text: 'Just bring a pair of gloves and a bottle of water.',
+                    hasBlank: false
+                },
+                {
+                    speaker: 'Omar',
+                    beforeBlank: '',
+                    afterBlank: '',
+                    hasBlank: true,
+                    id: 'dlg_5',
+                    blankNum: 5,
+                    options: [
+                        'How long will we stay there?',
+                        'Where was the ancient statue found?',
+                        'What did you eat for breakfast?'
+                    ],
+                    correct: 'How long will we stay there?',
+                    explanation: 'Kareem replies with the duration/end time ("until 12:00 PM").'
+                },
+                {
+                    speaker: 'Kareem',
+                    text: 'We will stay until 12:00 PM. See you on Friday!',
+                    hasBlank: false
+                }
+            ],
+            reorder: [
+                {
+                    id: 'ro_1',
+                    scrambled: ['clean.', 'keep', 'must', 'We', 'environment', 'our'],
+                    correctSentence: 'We must keep our environment clean.',
+                    explanation: 'Subject (We) + modal (must) + base verb (keep) + object (our environment clean).'
+                },
+                {
+                    id: 'ro_2',
+                    scrambled: ['was', 'reading', 'a', 'story', 'Mona', 'yesterday.'],
+                    correctSentence: 'Mona was reading a story yesterday.',
+                    explanation: 'Subject (Mona) + Past Continuous (was reading) + object (a story) + time expression (yesterday).'
+                },
+                {
+                    id: 'ro_3',
+                    scrambled: ['the', 'Nile', 'river.', 'longest', 'The', 'is'],
+                    correctSentence: 'The Nile is the longest river.',
+                    explanation: 'Subject (The Nile) + verb (is) + superlative phrase (the longest river).'
+                },
+                {
+                    id: 'ro_4',
+                    scrambled: ['should', 'hard', 'You', 'exams.', 'your', 'for', 'study'],
+                    correctSentence: 'You should study hard for your exams.',
+                    explanation: 'Subject (You) + modal (should) + verb (study) + adverb (hard) + prepositional phrase (for your exams).'
+                },
+                {
+                    id: 'ro_5',
+                    scrambled: ['going', 'They', 'to', 'visit', 'Aswan.', 'are'],
+                    correctSentence: 'They are going to visit Aswan.',
+                    explanation: 'Subject (They) + are going to + base verb (visit) + object (Aswan).'
+                },
+                {
+                    id: 'ro_6',
+                    scrambled: ['to', 'recycle', 'used', 'We', 'paper.', 'old'],
+                    correctSentence: 'We used to recycle old paper.',
+                    explanation: 'Subject (We) + used to + base verb (recycle) + object (old paper).'
+                }
+            ],
+            reading: [
+                {
+                    id: 'rd_1',
+                    question: 'What is the main idea of the passage?',
+                    options: [
+                        { key: 'a', text: 'How students made their school cleaner and greener' },
+                        { key: 'b', text: 'How to build a new science laboratory' },
+                        { key: 'c', text: 'Why plastic bottles are expensive to buy' },
+                        { key: 'd', text: 'A school trip to the Egyptian Museum' }
+                    ],
+                    correct: 'a',
+                    explanation: 'The first sentence states that Grade 7 students started an environmental project to make their school greener and cleaner.'
+                },
+                {
+                    id: 'rd_2',
+                    question: 'What were the students doing when they suggested placing recycling bins?',
+                    options: [
+                        { key: 'a', text: 'Planting twenty young trees' },
+                        { key: 'b', text: 'Listening to the science teacher explain plastic pollution' },
+                        { key: 'c', text: 'Inviting parents to an exhibition' },
+                        { key: 'd', text: 'Installing solar-powered lamps' }
+                    ],
+                    correct: 'b',
+                    explanation: 'The passage says: "While the science teacher was explaining the dangers of plastic pollution, the students suggested placing recycling bins..."'
+                },
+                {
+                    id: 'rd_3',
+                    question: 'How many young trees did the students plant around the playground?',
+                    options: [
+                        { key: 'a', text: 'Ten' },
+                        { key: 'b', text: 'Twelve' },
+                        { key: 'c', text: 'Twenty' },
+                        { key: 'd', text: 'One hundred' }
+                    ],
+                    correct: 'c',
+                    explanation: 'The second paragraph mentions: "They also planted twenty young trees around the school playground..."'
+                },
+                {
+                    id: 'rd_4',
+                    question: 'Who are the students going to invite to their exhibition next week?',
+                    options: [
+                        { key: 'a', text: 'Only the science teachers' },
+                        { key: 'b', text: 'Tourists from other countries' },
+                        { key: 'c', text: 'Parents and neighbors' },
+                        { key: 'd', text: 'Architects and engineers' }
+                    ],
+                    correct: 'c',
+                    explanation: 'The final sentence states: "Next week, the students are going to invite parents and neighbors to a special exhibition..."'
+                }
+            ]
+        };
+
+        // ==========================================
+        // 2. APPLICATION STATE & THEME TOGGLE
+        // ==========================================
+        let isSubmitted = false;
+        let timerSeconds = 0;
+        let timerInterval = null;
+        const reorderSelections = {};
+
+        function toggleTheme() {
+            const htmlEl = document.documentElement;
+            const isDark = htmlEl.classList.toggle('dark');
+            document.getElementById('icon-sun').classList.toggle('hidden', !isDark);
+            document.getElementById('icon-moon').classList.toggle('hidden', isDark);
+        }
+
+        // ==========================================
+        // 3. INITIALIZATION & RENDERING
+        // ==========================================
+        function initQuiz() {
+            renderMCQList(quizData.mcq, 'mcq-container');
+            renderWordForm();
+            renderDialogue();
+            renderReorder();
+            renderMCQList(quizData.reading, 'reading-container');
+            startTimer();
+            updateProgress();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerSeconds = 0;
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                if (!isSubmitted) {
+                    timerSeconds++;
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+            const secs = String(timerSeconds % 60).padStart(2, '0');
+            document.getElementById('timer-display').textContent = `${mins}:${secs}`;
+        }
+
+        // Shared renderer for Part 1 (MCQ) and Part 5 (Reading Comprehension)
+        function renderMCQList(questionsArray, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = questionsArray.map((item, idx) => `
+                <div id="card-${item.id}" class="p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 transition-colors">
+                    <div class="flex items-start gap-3 mb-3.5">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/60 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                            ${idx + 1}
+                        </span>
+                        <p class="font-semibold text-slate-900 dark:text-slate-100 text-sm sm:text-base leading-relaxed">${item.question}</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:pl-10">
+                        ${item.options.map(opt => `
+                            <label id="label-${item.id}-${opt.key}"
+                                class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700/90 bg-white dark:bg-slate-800/90 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-indigo-50/40 dark:hover:bg-indigo-950/40 cursor-pointer transition select-none">
+                                <input type="radio" name="${item.id}" value="${opt.key}" onchange="updateProgress()"
+                                    class="w-4 h-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 dark:border-slate-600 dark:bg-slate-700">
+                                <span class="text-xs font-bold uppercase text-slate-400 dark:text-slate-500">${opt.key})</span>
+                                <span class="text-sm font-medium text-slate-800 dark:text-slate-200">${opt.text}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div id="feedback-${item.id}" class="hidden mt-3 sm:ml-10 p-3 rounded-lg text-xs sm:text-sm"></div>
+                </div>
+            `).join('');
+        }
+
+        // Render Part 2: Word Form
+        function renderWordForm() {
+            const container = document.getElementById('wordform-container');
+            container.innerHTML = quizData.wordForm.map((item, idx) => `
+                <div id="card-${item.id}" class="p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 transition-colors">
+                    <div class="flex items-start gap-3">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/60 font-bold text-xs flex items-center justify-center shrink-0 mt-1">
+                            ${idx + 1}
+                        </span>
+                        <div class="flex-1 space-y-2">
+                            <div class="text-sm sm:text-base font-medium text-slate-900 dark:text-slate-100 leading-loose flex flex-wrap items-center gap-2">
+                                <span>${item.prefix}</span>
+                                <input type="text" id="input-${item.id}" oninput="updateProgress()" autocomplete="off" spellcheck="false"
+                                    placeholder="type answer..."
+                                    class="w-40 sm:w-48 px-3 py-1.5 rounded-lg border-2 border-indigo-200 dark:border-indigo-500/40 bg-white dark:bg-slate-900 text-indigo-900 dark:text-indigo-200 placeholder-slate-400 dark:placeholder-slate-500 font-bold text-sm focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 transition">
+                                <span class="font-bold text-indigo-600 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/90 border border-indigo-200/50 dark:border-indigo-800/60 px-2 py-0.5 rounded-md text-xs sm:text-sm">${item.hint}</span>
+                                <span>${item.suffix}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="feedback-${item.id}" class="hidden mt-3 sm:ml-10 p-3 rounded-lg text-xs sm:text-sm"></div>
+                </div>
+            `).join('');
+        }
+
+        // Render Part 3: Dialogue
+        function renderDialogue() {
+            const container = document.getElementById('dialogue-container');
+            container.innerHTML = quizData.dialogue.map(line => {
+                const isOmar = line.speaker === 'Omar';
+                const badgeStyle = isOmar
+                    ? 'bg-sky-100 dark:bg-sky-950/80 text-sky-800 dark:text-sky-300 border-sky-200 dark:border-sky-800/70'
+                    : 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/70';
+
+                if (!line.hasBlank) {
+                    return `
+                        <div class="flex items-start gap-3">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold border ${badgeStyle} w-20 text-center shrink-0 mt-0.5">
+                                ${line.speaker}
+                            </span>
+                            <p class="text-sm sm:text-base text-slate-800 dark:text-slate-200 pt-0.5">${line.text}</p>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div id="card-${line.id}" class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2.5">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold border ${badgeStyle} w-20 text-center shrink-0">
+                                ${line.speaker}
+                            </span>
+                            <div class="flex-1 flex flex-wrap items-center gap-2 text-sm sm:text-base text-slate-800 dark:text-slate-200">
+                                ${line.beforeBlank ? `<span>${line.beforeBlank}</span>` : ''}
+                                <div class="inline-flex items-center gap-1.5 flex-1 min-w-[220px]">
+                                    <span class="font-extrabold text-indigo-600 dark:text-indigo-400">(${line.blankNum})</span>
+                                    <select id="select-${line.id}" onchange="updateProgress()"
+                                        class="w-full px-3 py-2 rounded-lg border-2 border-indigo-200 dark:border-indigo-500/40 bg-indigo-50/30 dark:bg-slate-800 text-sm font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 cursor-pointer transition">
+                                        <option value="">-- Choose the best response --</option>
+                                        ${line.options.map(opt => `<option value="${opt.replace(/"/g, '&quot;')}">${opt}</option>`).join('')}
+                                    </select>
+                                </div>
+                                ${line.afterBlank ? `<span>${line.afterBlank}</span>` : ''}
+                            </div>
+                        </div>
+                        <div id="feedback-${line.id}" class="hidden mt-3 p-3 rounded-lg text-xs sm:text-sm"></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render Part 4: Reorder Sentences
+        function renderReorder() {
+            const container = document.getElementById('reorder-container');
+            container.innerHTML = quizData.reorder.map((item, idx) => {
+                reorderSelections[item.id] = [];
+                return `
+                    <div id="card-${item.id}" class="p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-3 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/60 font-bold text-xs flex items-center justify-center shrink-0">
+                                    ${idx + 1}
+                                </span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Build Sentence #${idx + 1}</span>
+                            </div>
+                            <button type="button" id="clear-${item.id}" onclick="clearReorderSentence('${item.id}')"
+                                class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 px-2.5 py-1 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer">
+                                Clear
+                            </button>
+                        </div>
+
+                        <!-- Constructed Sentence Area -->
+                        <div id="dropzone-${item.id}"
+                            class="min-h-[52px] p-2.5 rounded-xl bg-white dark:bg-slate-900 border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-wrap items-center gap-2">
+                            <span class="text-xs text-slate-400 dark:text-slate-500 italic select-none">Tap words below to form the sentence...</span>
+                        </div>
+
+                        <!-- Scrambled Word Bank -->
+                        <div id="wordbank-${item.id}" class="flex flex-wrap items-center gap-2 pt-1">
+                            ${item.scrambled.map((word, wIdx) => `
+                                <button type="button" id="wordbtn-${item.id}-${wIdx}"
+                                    onclick="toggleReorderWord('${item.id}', ${wIdx}, '${word.replace(/'/g, "\\'")}')"
+                                    class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 shadow-2xs hover:border-indigo-400 dark:hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-sm font-semibold text-slate-800 dark:text-slate-100 transition cursor-pointer select-none">
+                                    ${word}
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <div id="feedback-${item.id}" class="hidden mt-2 p-3 rounded-lg text-xs sm:text-sm"></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Interactive Word Builder Logic for Part 4
+        function toggleReorderWord(qId, wordIdx, wordText) {
+            if (isSubmitted) return;
+            const list = reorderSelections[qId];
+            const existingPos = list.findIndex(entry => entry.idx === wordIdx);
+
+            if (existingPos === -1) {
+                list.push({ idx: wordIdx, word: wordText });
+            } else {
+                list.splice(existingPos, 1);
+            }
+            refreshReorderUI(qId);
+            updateProgress();
+        }
+
+        function clearReorderSentence(qId) {
+            if (isSubmitted) return;
+            reorderSelections[qId] = [];
+            refreshReorderUI(qId);
+            updateProgress();
+        }
+
+        function refreshReorderUI(qId) {
+            const item = quizData.reorder.find(q => q.id === qId);
+            const selected = reorderSelections[qId];
+            const dropzone = document.getElementById(`dropzone-${qId}`);
+
+            // Update word bank button states
+            item.scrambled.forEach((_, wIdx) => {
+                const btn = document.getElementById(`wordbtn-${qId}-${wIdx}`);
+                const isUsed = selected.some(entry => entry.idx === wIdx);
+                if (isUsed) {
+                    btn.classList.add('opacity-30', 'pointer-events-none');
+                } else {
+                    btn.classList.remove('opacity-30', 'pointer-events-none');
+                }
+            });
+
+            // Render selected pills inside dropzone
+            if (selected.length === 0) {
+                dropzone.innerHTML = `<span class="text-xs text-slate-400 dark:text-slate-500 italic select-none">Tap words below to form the sentence...</span>`;
+            } else {
+                dropzone.innerHTML = selected.map(entry => `
+                    <button type="button" onclick="toggleReorderWord('${qId}', ${entry.idx}, '${entry.word.replace(/'/g, "\\'")}')"
+                        class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-sm font-semibold shadow-2xs hover:bg-indigo-500 transition cursor-pointer">
+                        ${entry.word}
+                    </button>
+                `).join('');
+            }
+        }
+
+        // ==========================================
+        // 4. PROGRESS TRACKING
+        // ==========================================
+        function countAnsweredQuestions() {
+            let count = 0;
+
+            // Part 1: MCQ
+            quizData.mcq.forEach(q => {
+                if (document.querySelector(`input[name="${q.id}"]:checked`)) count++;
+            });
+
+            // Part 2: Word Form
+            quizData.wordForm.forEach(q => {
+                const val = document.getElementById(`input-${q.id}`).value.trim();
+                if (val.length > 0) count++;
+            });
+
+            // Part 3: Dialogue
+            quizData.dialogue.filter(d => d.hasBlank).forEach(q => {
+                const val = document.getElementById(`select-${q.id}`).value;
+                if (val !== '') count++;
+            });
+
+            // Part 4: Reorder
+            quizData.reorder.forEach(q => {
+                if (reorderSelections[q.id] && reorderSelections[q.id].length === q.scrambled.length) {
+                    count++;
+                }
+            });
+
+            // Part 5: Reading
+            quizData.reading.forEach(q => {
+                if (document.querySelector(`input[name="${q.id}"]:checked`)) count++;
+            });
+
+            return count;
+        }
+
+        function updateProgress() {
+            const answered = countAnsweredQuestions();
+            const pct = Math.round((answered / TOTAL_QUESTIONS) * 100);
+
+            document.getElementById('progress-text').textContent = `${answered} / ${TOTAL_QUESTIONS} Answered`;
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+
+            const hint = document.getElementById('submit-status-hint');
+            if (answered === TOTAL_QUESTIONS) {
+                hint.textContent = `All ${TOTAL_QUESTIONS} questions answered! Click the button to see your mark.`;
+                hint.className = 'text-xs font-semibold text-emerald-600 dark:text-emerald-400';
+            } else {
+                hint.textContent = `You have answered ${answered} of ${TOTAL_QUESTIONS} questions (${TOTAL_QUESTIONS - answered} remaining).`;
+                hint.className = 'text-xs text-slate-500 dark:text-slate-400';
+            }
+        }
+
+        // ==========================================
+        // 5. SUBMISSION & GRADING ENGINE
+        // ==========================================
+        function handleQuizSubmitClick() {
+            if (isSubmitted) return;
+            const answered = countAnsweredQuestions();
+            const remaining = TOTAL_QUESTIONS - answered;
+
+            if (remaining > 0) {
+                document.getElementById('modal-message').textContent =
+                    `You still have ${remaining} unanswered question${remaining > 1 ? 's' : ''}. Unanswered questions will receive 0 marks. Would you like to submit anyway?`;
+                const modal = document.getElementById('confirm-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                gradeQuiz();
+            }
+        }
+
+        function closeConfirmModal() {
+            const modal = document.getElementById('confirm-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function confirmAndGradeQuiz() {
+            closeConfirmModal();
+            gradeQuiz();
+        }
+
+        function normalizeText(str) {
+            return str
+                .toLowerCase()
+                .replace(/[’‘]/g, "'")
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function gradeMCQSection(questionsArray) {
+            let sectionScore = 0;
+            questionsArray.forEach(q => {
+                const selectedRadio = document.querySelector(`input[name="${q.id}"]:checked`);
+                const userVal = selectedRadio ? selectedRadio.value : null;
+                const isCorrect = userVal === q.correct;
+                if (isCorrect) sectionScore++;
+
+                document.querySelectorAll(`input[name="${q.id}"]`).forEach(inp => inp.disabled = true);
+
+                const correctOpt = q.options.find(o => o.key === q.correct);
+                const correctLabel = document.getElementById(`label-${q.id}-${q.correct}`);
+                correctLabel.classList.remove('border-slate-200', 'dark:border-slate-700/90', 'bg-white', 'dark:bg-slate-800/90');
+                correctLabel.classList.add('border-emerald-500', 'dark:border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/50', 'ring-1', 'ring-emerald-500');
+
+                if (userVal && !isCorrect) {
+                    const wrongLabel = document.getElementById(`label-${q.id}-${userVal}`);
+                    wrongLabel.classList.remove('border-slate-200', 'dark:border-slate-700/90', 'bg-white', 'dark:bg-slate-800/90');
+                    wrongLabel.classList.add('border-rose-500', 'dark:border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/50');
+                }
+
+                showQuestionFeedback(
+                    q.id,
+                    isCorrect,
+                    `${q.correct}) ${correctOpt.text}`,
+                    q.explanation
+                );
+            });
+            return sectionScore;
+        }
+
+        function gradeQuiz() {
+            isSubmitted = true;
+            clearInterval(timerInterval);
+
+            // 1. Grade Part 1 (MCQ - 15 marks)
+            const scorePart1 = gradeMCQSection(quizData.mcq);
+
+            // 2. Grade Part 2 (Word Form - 10 marks)
+            let scorePart2 = 0;
+            quizData.wordForm.forEach(q => {
+                const inputEl = document.getElementById(`input-${q.id}`);
+                inputEl.disabled = true;
+                const userClean = normalizeText(inputEl.value);
+                const isCorrect = q.accepted.some(ans => normalizeText(ans) === userClean);
+                if (isCorrect) scorePart2++;
+
+                inputEl.classList.remove('border-indigo-200', 'dark:border-indigo-500/40', 'bg-white', 'dark:bg-slate-900', 'text-indigo-900', 'dark:text-indigo-200');
+                if (isCorrect) {
+                    inputEl.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/60', 'text-emerald-900', 'dark:text-emerald-200');
+                } else {
+                    inputEl.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/60', 'text-rose-900', 'dark:text-rose-200');
+                }
+
+                showQuestionFeedback(
+                    q.id,
+                    isCorrect,
+                    q.displayAnswer,
+                    q.explanation
+                );
+            });
+
+            // 3. Grade Part 3 (Dialogue - 5 marks)
+            let scorePart3 = 0;
+            quizData.dialogue.filter(d => d.hasBlank).forEach(q => {
+                const selectEl = document.getElementById(`select-${q.id}`);
+                selectEl.disabled = true;
+                const isCorrect = selectEl.value === q.correct;
+                if (isCorrect) scorePart3++;
+
+                selectEl.classList.remove('border-indigo-200', 'dark:border-indigo-500/40', 'bg-indigo-50/30', 'dark:bg-slate-800');
+                if (isCorrect) {
+                    selectEl.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/60', 'text-emerald-900', 'dark:text-emerald-200');
+                } else {
+                    selectEl.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/60', 'text-rose-900', 'dark:text-rose-200');
+                }
+
+                showQuestionFeedback(
+                    q.id,
+                    isCorrect,
+                    q.correct,
+                    q.explanation
+                );
+            });
+
+            // 4. Grade Part 4 (Reorder - 6 marks)
+            let scorePart4 = 0;
+            quizData.reorder.forEach(q => {
+                const builtSentence = (reorderSelections[q.id] || []).map(e => e.word).join(' ');
+                const isCorrect = normalizeText(builtSentence) === normalizeText(q.correctSentence);
+                if (isCorrect) scorePart4++;
+
+                document.getElementById(`clear-${q.id}`).classList.add('hidden');
+                const dropzone = document.getElementById(`dropzone-${q.id}`);
+                dropzone.classList.remove('border-dashed', 'border-slate-300', 'dark:border-slate-700');
+                dropzone.classList.add(
+                    isCorrect ? 'border-emerald-500' : 'border-rose-500',
+                    isCorrect ? 'bg-emerald-50/40' : 'bg-rose-50/40',
+                    isCorrect ? 'dark:bg-emerald-950/30' : 'dark:bg-rose-950/30'
+                );
+
+                showQuestionFeedback(
+                    q.id,
+                    isCorrect,
+                    q.correctSentence,
+                    q.explanation
+                );
+            });
+
+            // 5. Grade Part 5 (Reading - 4 marks)
+            const scorePart5 = gradeMCQSection(quizData.reading);
+
+            // Calculate Final Totals
+            const totalScore = scorePart1 + scorePart2 + scorePart3 + scorePart4 + scorePart5;
+            const percentage = Math.round((totalScore / TOTAL_QUESTIONS) * 100);
+
+            // Populate Results Card
+            const studentName = document.getElementById('student-name').value.trim();
+            const titleEl = document.getElementById('result-student-title');
+            const msgEl = document.getElementById('result-feedback-msg');
+            const badgeEl = document.getElementById('final-grade-badge');
+
+            let gradeLabel = '';
+            if (percentage >= 90) {
+                gradeLabel = `${percentage}% • Excellent! 🌟`;
+                badgeEl.className = 'mt-1 px-3 py-1 rounded-lg text-sm font-extrabold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300/50 dark:border-emerald-800';
+                msgEl.textContent = 'Outstanding mastery of Hello Plus Units 2–4! You are ready for your exam.';
+            } else if (percentage >= 75) {
+                gradeLabel = `${percentage}% • Very Good 👍`;
+                badgeEl.className = 'mt-1 px-3 py-1 rounded-lg text-sm font-extrabold bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300 border border-sky-300/50 dark:border-sky-800';
+                msgEl.textContent = 'Strong performance! Check the few red highlights below to reach 100%.';
+            } else if (percentage >= 50) {
+                gradeLabel = `${percentage}% • Good Effort 📚`;
+                badgeEl.className = 'mt-1 px-3 py-1 rounded-lg text-sm font-extrabold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300/50 dark:border-amber-800';
+                msgEl.textContent = 'You passed! Review the grammar explanations below and try retaking the quiz.';
+            } else {
+                gradeLabel = `${percentage}% • Needs Revision 💪`;
+                badgeEl.className = 'mt-1 px-3 py-1 rounded-lg text-sm font-extrabold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 border border-rose-300/50 dark:border-rose-800';
+                msgEl.textContent = 'Read the explanations under each question carefully, then click Retake Quiz to practice again.';
+            }
+
+            titleEl.textContent = studentName ? `Results for ${studentName}` : 'Your Quiz Results';
+            document.getElementById('final-score').textContent = totalScore;
+            badgeEl.textContent = gradeLabel;
+
+            document.getElementById('breakdown-part1').textContent = `${scorePart1} / 15`;
+            document.getElementById('breakdown-part2').textContent = `${scorePart2} / 10`;
+            document.getElementById('breakdown-part3').textContent = `${scorePart3} / 5`;
+            document.getElementById('breakdown-part4').textContent = `${scorePart4} / 6`;
+            document.getElementById('breakdown-part5').textContent = `${scorePart5} / 4`;
+
+            // Hide Submit Bar & Show Results Section
+            document.getElementById('submit-bar').classList.add('hidden');
+            const resultsSection = document.getElementById('results-section');
+            resultsSection.classList.remove('hidden');
+
+            // Smooth scroll to top results
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function showQuestionFeedback(qId, isCorrect, correctText, explanation) {
+            const card = document.getElementById(`card-${qId}`);
+            const fb = document.getElementById(`feedback-${qId}`);
+
+            card.classList.remove('border-slate-200', 'dark:border-slate-800', 'dark:border-slate-700/80', 'bg-slate-50/50', 'dark:bg-slate-800/40', 'bg-white', 'dark:bg-slate-900');
+            if (isCorrect) {
+                card.classList.add('border-emerald-300', 'dark:border-emerald-700/80', 'bg-emerald-50/30', 'dark:bg-emerald-950/20');
+                fb.className = 'mt-3 p-3 rounded-lg text-xs sm:text-sm bg-emerald-100/80 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800/80';
+                fb.innerHTML = `
+                    <div class="font-bold flex items-center gap-1.5">
+                        <span>✅ Correct! (+1 Mark)</span>
+                    </div>
+                    <p class="mt-1 text-emerald-800 dark:text-emerald-300">${explanation}</p>
+                `;
+            } else {
+                card.classList.add('border-rose-300', 'dark:border-rose-700/80', 'bg-rose-50/30', 'dark:bg-rose-950/20');
+                fb.className = 'mt-3 p-3 rounded-lg text-xs sm:text-sm bg-rose-100/80 dark:bg-rose-950/70 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-800/80';
+                fb.innerHTML = `
+                    <div class="font-bold flex items-center gap-1.5">
+                        <span>❌ Incorrect (0 Marks) — Correct Answer: <span class="underline">${correctText}</span></span>
+                    </div>
+                    <p class="mt-1 text-rose-800 dark:text-rose-300">${explanation}</p>
+                `;
+            }
+            fb.classList.remove('hidden');
+        }
+
+        // ==========================================
+        // 6. RESET / RETAKE QUIZ
+        // ==========================================
+        function resetQuiz() {
+            isSubmitted = false;
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('submit-bar').classList.remove('hidden');
+            initQuiz();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Boot app
+        window.addEventListener('DOMContentLoaded', initQuiz);
+    </script>
+</body>
+</html>
